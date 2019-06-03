@@ -1,11 +1,12 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <Servo.h>
+#include <FS.h>
 
 const char* ssid = "Ne pipai!";
 const char* password = "mnogoslojnaparola";
 
-const int SERVO_PIN = D7;
+static const uint8_t D7 = 13;
 
 ESP8266WebServer server(80);
 
@@ -14,28 +15,36 @@ Servo servo;
 
 void setup() {
   Serial.begin(9600);
+  
+  SPIFFS.begin();
+  
   // Connect to WiFi
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
      delay(500);
      Serial.print(".");
   }
+  Serial.println(WiFi.localIP());
+  
   server.on("/", HTTP_GET, handleRoot);
   server.on("/feed", HTTP_GET, handleFeed);
   server.begin();
 }
 
 void handleRoot() {
-  server.send(200, "text/html", "<form action=\"/feed\" method=\"GET\"><input type=\"submit\" value=\"Feed Cat\"></form>");
+  File file = SPIFFS.open("/index.html", "r");
+  server.streamFile(file, "text/html");
 }
 
 void handleFeed() {
-  server.send(200, "text/html", "<html><title>Happy Cat</title><body><h1>You just fed the freakin' cat!</h1></body></html>");
   rotateServo();
+  //check if above executed properly?
+  File file = SPIFFS.open("/fedCat.html", "r");
+  server.streamFile(file, "text/html");
 }
 
 void rotateServo() {
-  servo.attach(SERVO_PIN);
+  servo.attach(D7);
   servo.write(0);
   delay(575);
   servo.write(60);
