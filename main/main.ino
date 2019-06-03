@@ -46,9 +46,9 @@ void handleFeed() {
 void rotateServo() {
   servo.attach(D7);
   servo.write(0);
-  delay(575);
-  servo.write(60);
-  delay(575);
+  delay(675);
+  servo.write(100);
+  delay(675);
   servo.detach();
 }
 
