@@ -1,0 +1,45 @@
+.border-button {
+  outline: solid 5px #FC5185;
+  transition: outline 0.6s linear;
+  margin: 0.5em; /* Increased margin since the outline expands outside the element */
+}
+
+.border-button:hover { outline-width: 10px; }
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.container img {
+  width: 100%;
+  height: auto%;
+  border: 10px solid transparent;
+  padding: -5px;
+  border-image: url(https://www.w3schools.com/css/border.png) 30 round; 
+  
+}
+
+.container .btn {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #f1f1f1;
+  color: black;
+  font-size: 16px;
+  padding: 16px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+ 
+}
+
+.container .btn:hover {
+  box-shadow: inset 0 0 0 5px #DC143C;
+}
+
+
